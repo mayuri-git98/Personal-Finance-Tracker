@@ -1,0 +1,22 @@
+<aside class="sidebar">
+  <ul class="nav-menu">
+    <li [class.active]="selectedItem === 'dashboard'" (click)="selectNavItem('dashboard')">
+      <i class="icon">📊</i> Dashboard
+    </li>
+    <li [class.active]="selectedItem === 'budget'" (click)="selectNavItem('budget')">
+      <i class="icon">💰</i> Budget
+    </li>
+    <li [class.active]="selectedItem === 'transaction'" (click)="selectNavItem('transaction')">
+      <i class="icon">💸</i> Transactions
+    </li>
+    <li [class.active]="selectedItem === 'goals'" (click)="selectNavItem('goals')">
+      <i class="icon">🎯</i> Goals
+    </li>
+    <li [class.active]="selectedItem === 'categories'" (click)="selectNavItem('categories')">
+      <i class="icon">📁</i> Categories
+    </li>
+    <li [class.active]="selectedItem === 'profile'" (click)="selectNavItem('profile')">
+      <i class="icon">👤</i>Profile
+    </li>
+  </ul>
+</aside>

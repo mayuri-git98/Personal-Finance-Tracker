@@ -1,0 +1,76 @@
+<div class="auth-wrapper">
+  <div class="project-info">
+    <h1 class="project-title">Welcome to Finance Tracker Application</h1>
+    <p class="project-subtitle">Track Your Expenses, Plan Your Future</p>
+  </div>
+  
+  <div class="login-container">
+    <h2>{{ isRegisterMode ? 'Register' : 'Login' }}</h2>
+    
+    <form (ngSubmit)="isRegisterMode ? onRegister() : onLogin()">
+      <input 
+        type="email" 
+        class="login-input" 
+        placeholder="Email" 
+        [(ngModel)]="email" 
+        name="email" 
+        required 
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        #emailInput="ngModel"
+      >
+      <div *ngIf="emailInput.invalid && (emailInput.dirty || emailInput.touched)" class="error">
+        <div *ngIf="emailInput.errors?.['required']">Email is required.</div>
+        <div *ngIf="emailInput.errors?.['pattern']">Enter a valid email.</div>
+      </div>
+      
+      <div class="password-wrapper">
+        <input 
+          [type]="showPassword ? 'text' : 'password'" 
+          class="login-input" 
+          placeholder="Password" 
+          [(ngModel)]="password" 
+          name="password"
+          required
+          minlength="6"
+          pattern=".*[0-9].*"
+          #passwordInput="ngModel"
+        >
+        <span class="eye-icon" (click)="togglePasswordVisibility()">👁️</span>
+      </div>
+      <div *ngIf="passwordInput.invalid && (passwordInput.dirty || passwordInput.touched)" class="error">
+        <div *ngIf="passwordInput.errors?.['required']">Password is required.</div>
+        <div *ngIf="passwordInput.errors?.['minlength']">Password must be at least 6 characters.</div>
+        <div *ngIf="passwordInput.errors?.['pattern']">Password must contain at least one number.</div>
+      </div>
+      
+      <div *ngIf="isRegisterMode" class="password-wrapper">
+        <input 
+          [type]="showConfirmPassword ? 'text' : 'password'" 
+          class="login-input" 
+          placeholder="Confirm Password" 
+          [(ngModel)]="confirmPassword" 
+          name="confirmPassword"
+          required
+          #confirmPasswordInput="ngModel"
+        >
+        <span class="eye-icon" (click)="toggleConfirmPasswordVisibility()">👁️</span>
+      </div>
+      <div *ngIf="isRegisterMode && password !== confirmPassword && confirmPassword" class="error">
+        Passwords do not match.
+      </div>
+      
+      <button 
+        type="submit" 
+        class="login-button"
+        [disabled]="emailInput.invalid || passwordInput.invalid || (isRegisterMode && password !== confirmPassword)"
+      >
+        {{ isRegisterMode ? 'Register' : 'Login' }}
+      </button>
+    </form>
+    
+    <div class="toggle-text">
+      {{ isRegisterMode ? 'Already have an account?' : 'New user?' }}
+      <a href="#" (click)="$event.preventDefault(); toggleMode()">{{ isRegisterMode ? 'Login' : 'Register' }}</a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,25 @@
+<div class="top-navbar">
+  <div class="left-section">
+    <h2>Finance Tracker</h2>
+    <p class="date">{{ currentDate }}</p>
+  </div>
+
+  <div class="center-section">
+    <div class="search-container">
+      <input type="text" placeholder="Search..." class="search-input" />
+      <button class="search-button">🔍</button>
+    </div>
+  </div>
+
+  <div class="nav-actions right-section">
+    <div class="notification-icon" (click)="selectNavItem('notifications')">
+      <span class="icon">🔔</span>
+      <span class="badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+    </div>
+    <!-- Added (click) event to navigate when Demo User is clicked -->
+    <div class="profile-container" (click)="navigateToDemoUser()">
+      <div class="profile-avatar">👤</div>
+      <span class="username">{{ username }}</span>
+    </div>
+  </div>
+</div>

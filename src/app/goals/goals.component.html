@@ -1,0 +1,59 @@
+<div class="container">
+    <h1>Goal Tracker</h1>
+  
+    <!-- Form to Add New Goal -->
+    <form (ngSubmit)="addGoal()" #goalForm="ngForm" class="goal-form">
+      <input 
+        type="text" 
+        name="name" 
+        [(ngModel)]="newGoal.name" 
+        placeholder="Goal Name (e.g., Buy Laptop)" 
+        required
+      >
+  
+      <input 
+        type="number" 
+        name="targetAmount" 
+        [(ngModel)]="newGoal.targetAmount" 
+        placeholder="Target Amount" 
+        min="100" 
+        required
+      >
+  
+      <input 
+        type="number" 
+        name="savedAmount" 
+        [(ngModel)]="newGoal.savedAmount" 
+        placeholder="Saved Amount" 
+        min="100"
+      >
+  
+      <button type="submit" [disabled]="!goalForm.form.valid">Add Goal</button>
+    </form>
+  
+    <!-- Table of Goals -->
+    <table class="goal-table">
+      <thead>
+        <tr>
+          <th>Goal</th>
+          <th>Target Amount</th>
+          <th>Saved Amount</th>
+          <th>Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let goal of goals">
+          <td>{{ goal.name }}</td>
+          <td>{{ goal.targetAmount | currency:'INR' }}</td>
+          <td>{{ goal.savedAmount | currency:'INR' }}</td>
+          <td>
+            <div class="progress-bar-container">
+              <div class="progress-bar" [style.width.%]="getProgress(goal.savedAmount, goal.targetAmount)">
+                {{ getProgress(goal.savedAmount, goal.targetAmount) | number:'1.0-0' }}%
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  

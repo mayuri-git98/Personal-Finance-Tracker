@@ -1,0 +1,48 @@
+<div class="container">
+  <h1>Money Tracker</h1>
+  
+  <!-- Budget Form -->
+  <form (ngSubmit)="addBudgetItem()" #budgetForm="ngForm" class="budget-form">
+    <select name="category" [(ngModel)]="newBudgetItem.categoryName" required>
+      <option value="" disabled selected>Select Category</option>
+      <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+    </select>
+    
+    <input type="number" name="allocated" [(ngModel)]="newBudgetItem.monthlyLimit" 
+           placeholder="Allocated Amount" required>
+    
+    <input type="number" name="spent" [(ngModel)]="newBudgetItem.currentSpent" 
+           placeholder="Spent Amount" required>
+    
+    <button type="submit" [disabled]="!budgetForm.form.valid">Add Budget</button>
+  </form>
+  
+  <!-- Budget Table -->
+  <table class="budget-table">
+    <thead>
+      <tr>
+        <th>Category</th>
+        <th>Allocated</th>
+        <th>Spent</th>
+        <th>Progress</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of budgetItems">
+        <td>{{ item.categoryName }}</td>
+        <td>{{ item.monthlyLimit | currency }}</td>
+        <td>{{ item.currentSpent | currency }}</td>
+        <td>
+          <div class="progress-bar-container">
+            <div class="progress-bar" [style.width.%]="getProgress(item.currentSpent, item.monthlyLimit)"
+                 [ngClass]="{'over-budget': item.currentSpent > item.monthlyLimit}">
+              {{ getProgress(item.currentSpent, item.monthlyLimit) | number:'1.0-0' }}%
+            </div>
+          </div>
+        </td>
+        <td>{{ item.status }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

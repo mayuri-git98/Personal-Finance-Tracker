@@ -1,0 +1,45 @@
+<div class="profile-container">
+
+    <!-- Header -->
+    <div class="header">
+      <button class="back-button">&#8592;</button>
+      <h2>Profile</h2>
+    </div>
+  
+    <!-- Profile Details -->
+    <div class="profile-item">
+      <span>My Avatar</span>
+      <div class="avatar">
+        <span class="avatar-initial">S</span>
+      </div>
+    </div>
+  
+    <div class="profile-item">
+      <span>ID</span>
+      <input [(ngModel)]="id" type="number" placeholder="Enter ID" class="profile-input" />
+
+    </div>
+  
+    <div class="profile-item">
+      <span>Nickname</span>
+      <input [(ngModel)]="nickname" placeholder="Enter nickname" class="profile-input" />
+    </div>
+  
+    <div class="profile-item">
+      <span>Gender</span>
+      <select [(ngModel)]="gender" class="profile-input">
+        <option value="" disabled selected>Select Gender</option>
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+  
+    <!-- Buttons -->
+    <div class="button-container">
+      <button class="signout-button" (click)="signOut()">Sign Out</button>
+      <button class="delete-button" (click)="deleteAccount()">Delete Account</button>
+    </div>
+  
+  </div>
+  

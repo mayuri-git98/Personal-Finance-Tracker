@@ -1,0 +1,77 @@
+.dashboard-container {
+  padding: 20px;
+}
+
+.welcome-card {
+  background-color: white;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.welcome-card h2 {
+  margin-top: 0;
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.welcome-card p {
+  color: #666;
+  margin-bottom: 0;
+  font-size: 16px;
+}
+
+.financial-summary {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 24px;
+  justify-content: space-between;
+}
+
+.summary-card {
+  flex: 1;
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.summary-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+}
+
+.balance-card::before {
+  background-color: #4285f4;
+}
+
+.income-card::before {
+  background-color: #34a853;
+}
+
+.expense-card::before {
+  background-color: #ea4335;
+}
+
+.summary-label {
+  color: #666;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.summary-amount {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}

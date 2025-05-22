@@ -1,0 +1,140 @@
+<div class="transaction-page">
+  <!-- Alert Messages -->
+  <div *ngIf="errorMessage" class="alert alert-danger">
+    {{ errorMessage }}
+    <button class="close-button" (click)="errorMessage = ''">×</button>
+  </div>
+  <div *ngIf="successMessage" class="alert alert-success">
+    {{ successMessage }}
+    <button class="close-button" (click)="successMessage = ''">×</button>
+  </div>
+
+  <!-- Transaction Form -->
+  <div class="transaction-form-container">
+    <form (ngSubmit)="addTransaction()" #transactionForm="ngForm" class="transaction-form">
+      <h2>Add Transaction</h2>
+
+      <div class="form-group">
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" [(ngModel)]="newTransaction.transactionDate" required>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" [(ngModel)]="newTransaction.description" required>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category:</label>
+        <select id="category" name="category" [(ngModel)]="newTransaction.category" required>
+          <option value="">-- Select Category --</option>
+          <option value="Income">Income</option>
+          <option value="Food">Food</option>
+          <option value="Bills">Bills</option>
+          <option value="Transport">Transport</option>
+          <option value="Entertainment">Entertainment</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="paymentMethod">Payment Method:</label>
+        <select id="paymentMethod" name="paymentMethod" [(ngModel)]="newTransaction.paymentMethod" required>
+          <option value="CASH">Cash</option>
+          <option value="CREDIT_CARD">Credit Card</option>
+          <option value="DEBIT_CARD">Debit Card</option>
+          <option value="UPI">UPI</option>
+          <option value="BANK_TRANSFER">Bank Transfer</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" [(ngModel)]="newTransaction.amount" required>
+      </div>
+
+      <button type="submit" [disabled]="!transactionForm.form.valid">Add Transaction</button>
+      
+      <!-- Debug button -->
+      <button type="button" (click)="logTransaction()" class="debug-button">Debug</button>
+    </form>
+  </div>
+
+  <!-- Transaction Summary -->
+  <div class="transaction-summary">
+    <div class="transaction-summary-card">
+      <h3>Total Income</h3>
+      <p>₹{{ totalIncome | number:'1.2-2' }}</p>
+    </div>
+    <div class="transaction-summary-card">
+      <h3>Total Expenses</h3>
+      <p>₹{{ totalExpenses | number:'1.2-2' }}</p>
+    </div>
+    <div class="transaction-summary-card">
+      <h3>Balance</h3>
+      <p>₹{{ balance | number:'1.2-2' }}</p>
+    </div>
+  </div>
+
+  <!-- Transaction Table -->
+  <div class="transaction-table-container">
+    <div class="table-header">
+      <h2>Recent Transactions</h2>
+      <button (click)="reloadData()" class="reload-btn">Reload Data</button>
+    </div>
+    
+    <!-- Loading spinner -->
+    <div *ngIf="isLoading" class="loading-spinner">
+      Loading transactions...
+    </div>
+    
+    <!-- No transactions message -->
+    <div *ngIf="!isLoading && transactions.length === 0" class="no-transactions">
+      No transactions found. Add one using the form above.
+    </div>
+    
+    <!-- Transaction table -->
+    <table *ngIf="!isLoading && transactions.length > 0" class="transaction-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Payment</th>
+          <th>Amount</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of transactions">
+          <td>{{ transaction.transactionDate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ transaction.description }}</td>
+          <td>{{ transaction.category }}</td>
+          <td>{{ transaction.paymentMethod }}</td>
+          <td [ngClass]="getTransactionClass(transaction.amount)">
+            ₹{{ transaction.amount | number:'1.2-2' }}
+          </td>
+          <td>
+            <button (click)="deleteTransaction(transaction.transactionId!)" class="delete-btn" [disabled]="!transaction.transactionId">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Debug information -->
+  <div class="debug-info">
+    <details>
+      <summary>Debug Information</summary>
+      <div>
+        <h3>API URL:</h3>
+        <pre>http://localhost:8080/api/transactions</pre>
+        
+        <h3>Transaction Count:</h3>
+        <pre>{{ transactions.length }}</pre>
+        
+        <h3>Raw Transactions Data:</h3>
+        <pre>{{ transactions | json }}</pre>
+      </div>
+    </details>
+  </div>
+</div>

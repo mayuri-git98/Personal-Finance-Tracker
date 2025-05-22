@@ -1,0 +1,81 @@
+<div class="app-container">
+  <!-- Show login screen if not logged in -->
+  <div *ngIf="!isLoggedIn" class="login-container">
+    <app-login (loginSuccess)="handleLoginSuccess()"></app-login>
+  </div>
+  
+  <!-- Show main app if logged in -->
+  <div *ngIf="isLoggedIn" class="main-app">
+    <!-- Top navigation bar -->
+    <header class="app-header">
+      <div class="logo">
+        <h1>Finance Tracker</h1>
+        <p class="date">{{ currentDate | date:'E, MMM d, y' }}</p>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search..." class="search-input">
+        <button class="search-button">
+          <i class="search-icon">🔍</i>
+        </button>
+      </div>
+      <div class="user-info">
+        <div class="notification-icon">
+          <span class="notification-badge">3</span>
+          <i class="bell-icon">🔔</i>
+        </div>
+        <div class="user-profile">
+          <span class="user-name">Demo User</span>
+        </div>
+      </div>
+    </header>
+    
+    <div class="content-container">
+      <!-- Side navigation -->
+      <nav class="sidebar">
+        <ul class="nav-items">
+          <li class="nav-item" [class.active]="selectedComponent === 'dashboard'" (click)="handleNavItemClick('dashboard')">
+            <a>
+              <i class="nav-icon">📊</i>
+              <span>Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item" [class.active]="selectedComponent === 'budget'" (click)="handleNavItemClick('budget')">
+            <a>
+              <i class="nav-icon">💰</i>
+              <span>Budget</span>
+            </a>
+          </li>
+          <li class="nav-item" [class.active]="selectedComponent === 'transaction'" (click)="handleNavItemClick('transaction')">
+            <a>
+              <i class="nav-icon">📝</i>
+              <span>Transactions</span>
+            </a>
+          </li>
+          <li class="nav-item" [class.active]="selectedComponent === 'goals'" (click)="handleNavItemClick('goals')">
+            <a>
+              <i class="nav-icon">🎯</i>
+              <span>Goals</span>
+            </a>
+          </li>
+          <li class="nav-item" [class.active]="selectedComponent === 'categories'" (click)="handleNavItemClick('categories')">
+            <a>
+              <i class="nav-icon">📁</i>
+              <span>Categories</span>
+            </a>
+          </li>
+          <li class="nav-item" [class.active]="selectedComponent === 'profile'" (click)="handleNavItemClick('profile')">
+            <a>
+              <i class="nav-icon">👤</i>
+              <span>profile</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <!-- Main content area -->
+      <main class="main-content">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
+  </div>
+</div>

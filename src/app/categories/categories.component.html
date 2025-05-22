@@ -1,0 +1,60 @@
+<div class="container">
+    <h1>Expense Categories</h1>
+  
+    <!-- Add New Category -->
+    <form (ngSubmit)="addCategory()" #categoryForm="ngForm" class="category-form">
+      <input 
+        type="text" 
+        name="name" 
+        [(ngModel)]="newCategory.name" 
+        placeholder="Category Name" 
+        required
+      >
+  
+      <input 
+        type="number" 
+        name="limit" 
+        [(ngModel)]="newCategory.limit" 
+        placeholder="Limit Amount" 
+        min="100" 
+        required
+      >
+  
+      <input 
+        type="number" 
+        name="spent" 
+        [(ngModel)]="newCategory.spent" 
+        placeholder="Spent Amount" 
+        min="100"
+      >
+  
+      <button type="submit" [disabled]="!categoryForm.form.valid">Add Category</button>
+    </form>
+  
+    <!-- Categories Table -->
+    <table class="category-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th>Limit</th>
+          <th>Spent</th>
+          <th>Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let category of categories">
+          <td>{{ category.name }}</td>
+          <td>{{ category.limit | currency:'INR' }}</td>
+          <td>{{ category.spent | currency:'INR' }}</td>
+          <td>
+            <div class="progress-bar-container">
+              <div class="progress-bar" [style.width.%]="getProgress(category.spent, category.limit)">
+                {{ getProgress(category.spent, category.limit) | number:'1.0-0' }}%
+              </div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
